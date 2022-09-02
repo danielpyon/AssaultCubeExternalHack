@@ -41,6 +41,14 @@ int main()
     ReadProcessMemory(hProcess, (BYTE*)ammoAddr, &ammoValue, sizeof(ammoValue), nullptr);
     std::cout << "New ammo = " << std::dec << ammoValue << std::endl;
 
+    // Increase health
+    std::vector<unsigned int> healthOffsets = { 0xf8 };
+    uintptr_t healthAddr = FindDMAAddy(hProcess, dynamicPtrBaseAddr, healthOffsets);
+    int healthValue = 0;
+
+    ReadProcessMemory(hProcess, (BYTE*)healthAddr, &healthValue, sizeof(healthAddr), nullptr);
+    int newHealth = 999;
+    WriteProcessMemory(hProcess, (BYTE*)healthAddr, &newHealth, sizeof(newHealth), nullptr);
 
 
     getchar();
